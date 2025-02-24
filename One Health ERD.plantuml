@@ -130,6 +130,7 @@ entity "Malaria_Case_Report" as e27 {
     condition_data : condition_id <<FK>>
     date_reported : timestamp
     symptoms : observation_id <<FK>>
+    medication : medication_id <<FK>>
 }
 
 entity "Observation" as e28 {
@@ -144,6 +145,14 @@ entity "Medical_History" as e29 {
     patient : patient_id <<FK>>
     condition : condition_id <<FK>>
     list_date : timestamp
+}
+
+entity "Medication" as e30 {
+    *medication_id : int <<PK>>
+    medication : code_id <<FK>>
+    patient : patient_id <<FK>>
+    condition : condition_id <<FK>>
+    date : timestamp
 }
 
 e01 }|..|| e02
@@ -178,6 +187,10 @@ e28 ||..|| e14
 e27 ||..|{ e28
 e29 ||..|{ e08
 e29 ||..|| e17
-e27 ||..|| e29
+e27 ||..|{ e29
+e27 ||..|{ e30
+e30 ||..|| e14
+e17 ||..|{ e30
+e08 ||..|{ e30
 
 @enduml
