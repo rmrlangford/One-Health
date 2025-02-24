@@ -1,0 +1,174 @@
+@startuml
+
+' avoid problems with angled crows feet
+'skinparam linetype ortho
+skinparam linetype polyline
+
+entity "Weather_Event" as e01 {
+    *weather_id : int <<PK>>
+    date : timestamp
+    location : location_id <<FK>>
+    temperature : temperature_id <<FK>>
+    humidity : humidity_id <<FK>>
+    rainfall : rainfall_id <<FK>>
+    wind_speed : wind_speed_id <<FK>>
+    cloud_coverage : cloud_coverage_id <<FK>>
+    solar_radiation : cloud_coverage_id <<FK>>
+    atmospheric_pressure : atmospheric_pressure_id <<FK>>
+}
+
+entity "Temperature" as e10 {
+    *temperature_id : int <<PK>>
+    temp : decimal
+    category : code_id <<FK>>
+    scale : code_id <<FK>>
+}
+
+entity "Location" as e02 {
+    *location_id : int <<PK>>
+    region : region_id <<FK>>
+    latitude : decimal
+    longitude : decimal
+}
+
+entity "Region" as e03 {
+    *region_id : int <<PK>>
+    country : country_id <<FK>>
+    name : text
+}
+
+entity "Country" as e04 {
+    *country_id : int <<PK>>
+    country_code : code_id <<FK>>
+    name : text
+}
+
+entity "Facility" as e05 {
+    *facility_id : int <<PK>>
+    *code : int <<UNIQUE>>
+    *type : text <<UNIQUE>>
+    name : text
+    location : location_id <<FK>>
+}
+
+entity "Condition" as e08 {
+    *condition_id : int <<PK>>
+    condition_code : code_id <<FK>>
+    date_recorded : timestamp
+    verification_status : code_id <<FK>>
+    location : location_id <<FK>>
+    symptom_onset : timestamp
+    diagnosing_facility : facility_id <<FK>>
+}
+
+entity "Terminology" as e13 {
+    *terminology_id : int <<PK>>
+    *code_system_name : text <<UNIQUE>>
+    *code_system_url : text  <<UNIQUE>>
+    code_system_version : text
+}
+
+entity "Code" as e14 {
+    *code_id : int <<PK>>
+    *code : text  <<UNIQUE>>
+    code_system : terminology_id <<FK>>
+    display : text
+    description: text
+}
+
+entity "Humidity" as e15 {
+    *humidity_id : int <<PK>>
+    humidity : decimal
+    category : code_id <<FK>>
+}
+
+entity "Patient" as e17 {
+    *patient_id : int <<PK>>
+    age : int
+    gender : code_id <<FK>>
+    pregnancy_status : code_id <<FK>>
+    vulnerable_group : code_id <<FK>>
+    population_density : code_id <<FK>>
+    socioeconomic_status : code_id <<FK>>
+}
+
+entity "Rainfall" as e20 {
+    *rainfall_id : int <<PK>>
+    rainfall_type : code_id <<FK>>
+    rainfall_intensity : decimal
+    category : code_id <<FK>>
+}
+
+entity "Wind_Speed" as e23 {
+    *wind_speed_id : int <<PK>>
+    wind_speed : decimal
+    scale : code_id <<FK>>
+    category : code_id <<FK>>
+}
+
+entity "Cloud_Coverage" as e24 {
+    *cloud_coverage_id : int <<PK>>
+    cloud_coverage : decimal
+    category : code_id <<FK>>
+}
+
+entity "Solar_radiation" as e25 {
+    *cloud_coverage_id : int <<PK>>
+    solar_radiation : decimal
+    category : code_id <<FK>>
+}
+
+entity "Atmospheric_Pressure" as e26 {
+    *atmospheric_pressure_id : int <<PK>>
+    atmospheric_pressure : decimal
+    category : code_id <<FK>>
+}
+
+entity "Malaria_Case_Report" as e27 {
+    *malaria_case_report_id : int <<PK>>
+    patient : patient_id <<FK>>
+    condition_data : condition_id <<FK>>
+    date_reported : timestamp
+    symptoms : observation_id <<FK>>
+}
+
+entity "Observation" as e28 {
+    *observation_id : int <<PK>>
+    patient : patient_id <<FK>>
+    date : timestamp
+    code : code_id <<FK>>
+}
+
+e01 }|..|| e02
+e03 ||..|{ e02
+e04 ||..|{ e03
+e02 ||..|{ e05
+e02 ||..|{ e08
+e05 ||..|{ e08
+e01 ||..|| e10
+e13 ||..|{ e14
+e08 ||..|| e14
+e04 ||..|| e14
+e15 ||..|| e14
+e01 ||..|| e15
+e10 ||..|| e14
+e17 ||..|| e14
+e17 ||..|{ e08
+e01 ||..|| e20
+e20 ||..|| e14
+e01 ||..|| e23
+e23 ||..|| e14
+e01 ||..|| e24
+e24 ||..|| e14
+e01 ||..|| e25
+e25 ||..|| e14
+e01 ||..|| e26
+e26 ||..|| e14
+e27 ||..|| e17
+e27 ||..|{ e08
+e17 ||..|{ e28
+e28 ||..|| e14
+e27 ||..|{ e28
+
+
+@enduml
