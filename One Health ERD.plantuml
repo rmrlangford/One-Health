@@ -139,6 +139,13 @@ entity "Observation" as e28 {
     code : code_id <<FK>>
 }
 
+entity "Medical_History" as e29 {
+    *medical_history_id : int <<PK>>
+    patient : patient_id <<FK>>
+    condition : condition_id <<FK>>
+    compilation_date : timestamp
+}
+
 e01 }|..|| e02
 e03 ||..|{ e02
 e04 ||..|{ e03
@@ -169,6 +176,8 @@ e27 ||..|{ e08
 e17 ||..|{ e28
 e28 ||..|| e14
 e27 ||..|{ e28
-
+e29 ||..|{ e08
+e29 ||..|| e17
+e27 ||..|| e29
 
 @enduml
