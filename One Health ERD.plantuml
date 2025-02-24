@@ -143,7 +143,7 @@ entity "Medical_History" as e29 {
     *medical_history_id : int <<PK>>
     patient : patient_id <<FK>>
     condition : condition_id <<FK>>
-    compilation_date : timestamp
+    list_date : timestamp
 }
 
 e01 }|..|| e02
