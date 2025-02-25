@@ -127,7 +127,8 @@ entity "Atmospheric_Pressure" as e26 {
 entity "Malaria_Case_Report" as e27 {
     *malaria_case_report_id : int <<PK>>
     patient : patient_id <<FK>>
-    condition_data : condition_id <<FK>>
+    condition : condition_id <<FK>>
+    medical_history : medical_history_id <<FK>>
     date_reported : timestamp
     symptoms : observation_id <<FK>>
     medication : medication_id <<FK>>
@@ -181,7 +182,7 @@ e25 ||..|| e14
 e01 ||..|| e26
 e26 ||..|| e14
 e27 ||..|| e17
-e27 ||..|{ e08
+e27 ||..|| e08
 e17 ||..|{ e28
 e28 ||..|| e14
 e27 ||..|{ e28
