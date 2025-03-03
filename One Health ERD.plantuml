@@ -90,6 +90,7 @@ entity "Patient" as e17 {
     vulnerable_group : code_id <<FK>>
     population_density : code_id <<FK>>
     socioeconomic_status : code_id <<FK>>
+    deceased : bool
 }
 
 entity "Rainfall" as e20 {
@@ -153,7 +154,7 @@ entity "Medication" as e30 {
     medication : code_id <<FK>>
     patient : patient_id <<FK>>
     condition : condition_id <<FK>>
-    date : timestamp
+    pescription_date : timestamp
 }
 
 e01 }|..|| e02
