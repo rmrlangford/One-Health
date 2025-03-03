@@ -154,7 +154,7 @@ entity "Medication" as e30 {
     medication : code_id <<FK>>
     patient : patient_id <<FK>>
     condition : condition_id <<FK>>
-    pescription_date : timestamp
+    prescription_date : timestamp
 }
 
 e01 }|..|| e02
