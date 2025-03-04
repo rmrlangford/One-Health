@@ -53,6 +53,7 @@ entity "Facility" as e05 {
 
 entity "Condition" as e08 {
     *condition_id : int <<PK>>
+    encounter : encounter_id <<FK>>
     condition_code : code_id <<FK>>
     date_recorded : timestamp
     verification_status : code_id <<FK>>
@@ -138,6 +139,7 @@ entity "Malaria_Case_Report" as e27 {
 entity "Observation" as e28 {
     *observation_id : int <<PK>>
     patient : patient_id <<FK>>
+    encounter : encounter_id <<FK>>
     date : timestamp
     code : code_id <<FK>>
 }
@@ -155,6 +157,12 @@ entity "Medication" as e30 {
     patient : patient_id <<FK>>
     condition : condition_id <<FK>>
     prescription_date : timestamp
+}
+
+entity "Encounter" as e31 {
+    *encounter_id : int <<PK>>
+    patient : patient_id <<FK>>
+    visit_date : timestamp
 }
 
 e01 }|..|| e02
@@ -194,5 +202,8 @@ e27 ||..|{ e30
 e30 ||..|| e14
 e17 ||..|{ e30
 e08 ||..|{ e30
+e17 ||..|{ e31
+e28 ||..|| e31
+e08 ||..|| e31
 
 @enduml
